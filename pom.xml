@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.gitee.ley1996</groupId>
+    <artifactId>springboot-learn</artifactId>
+    <version>1.0.0</version>
+    <modules>
+        <module>mybatis-dynamic-datasource</module>
+        <module>springboot-redis</module>
+        <module>springboot-rabbitmq</module>
+        <module>springboot-elasticsearch</module>
+        <module>springboot-commons</module>
+        <module>springboot-mybatisplus</module>
+        <module>springboot-mongdb</module>
+        <module>springboot-images</module>
+        <module>springboot-sql</module>
+        <module>springboot-jpa</module>
+        <module>springboot-logger</module>
+        <module>springboot-web</module>
+        <module>springboot-aop</module>
+        <module>springboot-sso</module>
+        <module>spring-learn</module>
+        <module>springboot-autoconfig</module>
+        <module>spring-customized-annotation</module>
+        <module>qr-code</module>
+        <module>formatter-spring-boot-starter</module>
+        <module>first-spring-boot-starter</module>
+        <module>java-learn</module>
+        <module>springboot-embedded-tomcat</module>
+        <module>springboot-auto-web</module>
+        <module>springboot-auto-web-jar</module>
+        <module>spring-boot-web-flux-learn</module>
+        <module>spring-boot-kafka-learn</module>
+        <module>springboot-actuator-learn</module>
+    </modules>
+    <packaging>pom</packaging>
+
+
+    <!--properties configuration-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <lombok.version>1.16.8</lombok.version>
+        <platform-bom.version>Cairo-SR7</platform-bom.version>
+        <spring-boot.version>2.0.8.RELEASE</spring-boot.version>
+        <mybatis.spring.boot.version>1.3.2</mybatis.spring.boot.version>
+        <mybatis.version>3.5.1</mybatis.version>
+        <druid.spring.boot.version>1.1.16</druid.spring.boot.version>
+        <swagger2.version>2.6.1</swagger2.version>
+        <mybatisplus.version>3.1.0</mybatisplus.version>
+    </properties>
+
+
+    <!--<parent>-->
+    <!--<groupId>org.springframework.boot</groupId>-->
+    <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+    <!--<version>2.1.4.RELEASE</version>-->
+    <!--<relativePath />-->
+    <!--</parent>-->
+
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!--
+                io.spring.platform bom Brussels-SR7
+                springframework version 4.3.13.RELEASE
+                spring boot version 1.5.9.RELEASE
+            -->
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${platform-bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.google.errorprone/error_prone_annotations -->
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_annotations</artifactId>
+                <version>2.0.20</version>
+            </dependency>
+
+            <!--<dependency>-->
+            <!--<groupId>commons-io</groupId>-->
+            <!--<artifactId>commons-io</artifactId>-->
+            <!--<version>2.6</version>-->
+            <!--</dependency>-->
+
+            <!--<dependency>-->
+            <!--<groupId>com.google.guava</groupId>-->
+            <!--<artifactId>guava</artifactId>-->
+            <!--<version>23.0</version>-->
+            <!--</dependency>-->
+
+            <!--<dependency>-->
+            <!--<groupId>commons-collections</groupId>-->
+            <!--<artifactId>commons-collections</artifactId>-->
+            <!--<version>3.2.2</version>-->
+            <!--</dependency>-->
+
+            <!--<dependency>-->
+            <!--<groupId>commons-logging</groupId>-->
+            <!--<artifactId>commons-logging</artifactId>-->
+            <!--<version>1.2</version>-->
+            <!--</dependency>-->
+
+
+            <!--
+               lombok 1.16.8
+            -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+
+            <!-- mybatis spring boot starter-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.spring.boot.version}</version>
+            </dependency>
+
+            <!--mybatis-->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <!--从3.0.3移除了代码自动生成器依赖,需要手动添加-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatisplus.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.spring.boot.version}</version>
+            </dependency>
+
+            <!-- Swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger2.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatisplus.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <!--must configuration executable-->
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

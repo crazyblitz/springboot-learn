@@ -1,0 +1,31 @@
+spring:
+  aop:
+    proxy-target-class: true
+    auto: true
+  datasource:
+    druid:
+      # 数据库 1
+      db1:
+        url: jdbc:mysql://localhost:3306/db1?characterEncoding=utf-8&useSSL=true
+        username: root
+        password: root
+        driver-class-name: com.mysql.jdbc.Driver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+      # 数据库 2
+      db2:
+        url: jdbc:mysql://localhost:3306/db2?characterEncoding=utf-8&useSSL=true
+        username: root
+        password: root
+        driver-class-name: com.mysql.jdbc.Driver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+
+
+mybatis:
+   config-location: classpath:/config/mybatis-config.xml
+   mapper-locations: classpath:/mybatis/mapper/*.xml
+
+

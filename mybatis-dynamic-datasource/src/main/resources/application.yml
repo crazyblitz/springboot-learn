@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    #使用动态路由配合AOP
+    active: v1
+logging:
+  config: classpath:spring-logback.xml

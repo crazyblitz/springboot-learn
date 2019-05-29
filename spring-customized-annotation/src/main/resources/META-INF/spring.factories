@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationContextInitializer=\
+  com.ley.spring.customized.annotation.aware.FirstApplicationContextInitializer

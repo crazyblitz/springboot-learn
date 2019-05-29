@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>springboot-learn</artifactId>
+        <groupId>com.gitee.ley1996</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>war</packaging>
+
+    <artifactId>springboot-auto-web</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.gitee.ley1996</groupId>
+            <artifactId>springboot-auto-web-jar</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+
+        <plugins>
+            <!-- Maven war 插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <!-- 忽略错误，当web.xml不存在时 -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <!--<plugin>-->
+            <!--<groupId>org.apache.maven.plugins</groupId>-->
+            <!--<artifactId>maven-dependency-plugin</artifactId>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>unpack</id>-->
+            <!--<phase>generate-resources</phase>-->
+            <!--<goals>-->
+            <!--<goal>unpack</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<artifactItems>-->
+            <!--<artifactItem>-->
+            <!--<groupId>com.gitee.ley1996</groupId>-->
+            <!--<artifactId>springboot-auto-web-jar</artifactId>-->
+            <!--<version>1.0.0</version>-->
+            <!--<type>jar</type>-->
+            <!--<overWrite>true</overWrite>-->
+            <!--<outputDirectory>./target/classes</outputDirectory>-->
+            <!--</artifactItem>-->
+            <!--</artifactItems>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+
+            <!-- Tomcat Maven 插件用于构建可执行 war -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <path>/</path>
+                    <server>tomcat7</server>
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <goal>exec-war-only</goal>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
