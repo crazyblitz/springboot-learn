@@ -1,6 +1,8 @@
 package com.ley.spring.learn.protocol;
 
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.IOException;
@@ -15,8 +17,10 @@ import java.io.IOException;
 public class DubboProtocolResolveApplication {
 
     public static void main(String[] args) throws IOException {
+        DefaultResourceLoader resourceLoader = new DefaultResourceLoader();
         DubboProtocolResolver resolver = new DubboProtocolResolver();
-        Resource resource = resolver.resolve("dubbo://jdbc.properties", null);
+        resourceLoader.addProtocolResolver(resolver);
+        Resource resource = resourceLoader.getResource("dubbo://jdbc.properties");
         System.out.println(PropertiesLoaderUtils
                 .loadProperties(resource));
     }

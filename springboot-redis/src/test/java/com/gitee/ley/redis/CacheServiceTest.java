@@ -22,11 +22,6 @@ public class CacheServiceTest {
     @Test
     public void testCacheService() {
         String cacheKey = "1001";
-        System.out.println(cacheService.getCache(cacheKey, new CachePredicate<String, Object>() {
-            @Override
-            public Object execute(String key) {
-                return "1002";
-            }
-        }));
+        System.out.println(cacheService.getCache(cacheKey, cacheValue -> "1002"));
     }
 }

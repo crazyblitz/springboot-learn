@@ -38,6 +38,9 @@ public class OnClassCondition implements Condition {
 
     private boolean match = true;
 
+
+    private final MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory();
+
     /**
      * use fast-fail
      **/
@@ -54,7 +57,6 @@ public class OnClassCondition implements Condition {
                 ResourcePatternResolver resolver = ResourcePatternUtils.getResourcePatternResolver(context.getResourceLoader());
                 try {
                     for (String basePackage : basePackages) {
-                        MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory();
                         String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + resolveBasePackage(basePackage, context) + "/" + DEFAULT_RESOURCE_PATTERN;
                         Resource[] resources = resolver.getResources(packageSearchPath);
                         int matchIndex = 0;
@@ -62,10 +64,10 @@ public class OnClassCondition implements Condition {
                             if (resource.isReadable()) {
                                 MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
                                 ClassMetadata classMetadata = metadataReader.getClassMetadata();
-                                if (classMetadata.getClassName().equalsIgnoreCase(className)) {
-                                    matches[matchIndex++] = true;
-                                }
+                            if (classMetadata.getClassName().equalsIgnoreCase(className)) {
+                                matches[matchIndex++] = true;
                             }
+                        }
                         }
                     }
                 } catch (IOException e) {

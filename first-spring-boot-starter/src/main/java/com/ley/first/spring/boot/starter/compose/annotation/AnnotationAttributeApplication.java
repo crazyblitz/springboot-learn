@@ -48,5 +48,7 @@ public class AnnotationAttributeApplication {
 
         annotationAttributes.forEach((name, value) -> System.out.printf("\t 属性 %s : %s \n",
                 name, value));
+
+
     }
 }

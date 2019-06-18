@@ -24,7 +24,7 @@ public class RedisService{
 
     /**
      * #p0,代表第一个参数
-     * Cacheable如果缓存没有值,从则执行方法并缓存数据,如果缓存有值,则从缓存中获取值.
+     * cache able如果缓存没有值,从则执行方法并缓存数据,如果缓存有值,则从缓存中获取值.
      **/
     @Cacheable(key = "#p0")
     public BusRefImg findOne(String id) {

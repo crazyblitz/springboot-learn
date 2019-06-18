@@ -1,0 +1,21 @@
+
+hello:
+  user:
+    name: "刘恩源"
+
+
+#person:
+#  name: "刘恩源"
+#  age: 21
+#  school: "天津师范大学"
+
+app:
+ system:
+  session-timeout: 36s
+  read-timeout: 6s
+ io:
+  bufferSize: 3MB
+
+hello1:
+  config:
+    location: classpath:/hello1.yml

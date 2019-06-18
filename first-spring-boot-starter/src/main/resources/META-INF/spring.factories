@@ -1,0 +1,6 @@
+com.ley.first.spring.boot.starter.spring.factories.EnableConfiguration=\
+  com.ley.first.spring.boot.starter.spring.factories.UserConfiguration
+com.ley.first.spring.boot.starter.spring.factories.Goods=\
+com.ley.first.spring.boot.starter.spring.factories.GoodsImpl
+org.springframework.boot.autoconfigure.AutoConfigurationImportListener=\
+com.ley.first.spring.boot.starter.spring.factories.DefaultAutoConfigurationImportListener

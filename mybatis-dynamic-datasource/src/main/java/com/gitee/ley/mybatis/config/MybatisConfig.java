@@ -61,7 +61,7 @@ public class MybatisConfig {
         Resource[] mapperResources = resourcePatternResolver.getResources(mapperLocations);
         sqlSessionFactory.setMapperLocations(mapperResources);
         sqlSessionFactory.setConfigLocation(resourcePatternResolver.getResource(configLocation));
-        SqlSessionFactory sessionFactory=sqlSessionFactory.getObject();
+        SqlSessionFactory sessionFactory = sqlSessionFactory.getObject();
         sessionFactory.getConfiguration().setDefaultExecutorType(ExecutorType.REUSE);
         log.info("config location: {},mapper locations: {}", configLocation, mapperLocations);
         return sessionFactory;
@@ -71,7 +71,6 @@ public class MybatisConfig {
     @Bean("sqlSessionTemplate")
     @Primary
     public SqlSessionTemplate sqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
-
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

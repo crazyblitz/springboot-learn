@@ -6,10 +6,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.*;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.InjectionMetadata;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.LookupOverride;
 import org.springframework.beans.factory.support.MergedBeanDefinitionPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -19,6 +21,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
@@ -41,24 +45,24 @@ public class MyInjectAnnotationBeanProcessor extends InstantiationAwareBeanPostP
 
     protected final Log logger = LogFactory.getLog(getClass());
 
-    public final static String BEAN_NAME = "myInjectAnnotationBeanProcessor";
+    public final static String BEAN_NAME = "com.ley.spring.learn.inject.factory.annotation." + "internalMyInjectAnnotationBeanProcessor";
 
     /**
      * 处理的注解
      **/
     private final Class<? extends Annotation> myInjectAnnotation;
 
-
     private ConfigurableListableBeanFactory beanFactory;
 
     private int order = Ordered.LOWEST_PRECEDENCE;
 
-    public MyInjectAnnotationBeanProcessor() {
-        this.myInjectAnnotation = MyInject.class;
-    }
 
     private final Map<String, InjectionMetadata> injectionMetadataCache =
             new ConcurrentHashMap<String, InjectionMetadata>(256);
+
+    public MyInjectAnnotationBeanProcessor() {
+        this.myInjectAnnotation = MyInject.class;
+    }
 
 
     @Override
@@ -97,6 +101,7 @@ public class MyInjectAnnotationBeanProcessor extends InstantiationAwareBeanPostP
         }
         return pvs;
     }
+
 
     private InjectionMetadata findMyInjectMetadata(String beanName, Class<?> clazz, PropertyValues pvs) {
         // Fall back to class name as cache key, for backwards compatibility with custom callers.

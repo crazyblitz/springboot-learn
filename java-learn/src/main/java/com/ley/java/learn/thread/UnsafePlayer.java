@@ -20,6 +20,7 @@ public class UnsafePlayer {
         Player player = (Player) unsafe.allocateInstance(Player.class);
         player.setName("li lei");
         System.out.println(player.getName());
+
     }
 }
 

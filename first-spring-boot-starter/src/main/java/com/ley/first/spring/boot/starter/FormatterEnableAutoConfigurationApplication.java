@@ -44,13 +44,14 @@ public class FormatterEnableAutoConfigurationApplication {
         if (beans.isEmpty()) {
             throw new NoSuchBeanDefinitionException(Formatter.class);
         }
-        beans.forEach((beanName, formatter) -> {
-            System.out.printf("[Bean name : %s] %s.format(data) : %s\n", beanName, formatter.getClass().getSimpleName(),
-                    formatter.format(data));
-        });
+        beans.forEach((beanName, formatter) ->
+                System.out.printf("[Bean name : %s] %s.format(data) : %s\n", beanName, formatter.getClass().getSimpleName(),
+                        formatter.format(data))
+        );
 
 
         AutoConfigurationPackages.get(context.getBeanFactory()).forEach(System.out::println);
+
 
         //  关闭当前上下文
         context.close();
