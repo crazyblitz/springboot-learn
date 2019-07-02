@@ -42,7 +42,7 @@ public class PersonEndpoint {
 
     @ReadOperation
     public Map<String, String> getAll() {
-        throw new UnsupportedOperationException("getAll()");
+        return people;
     }
 
 
@@ -50,6 +50,7 @@ public class PersonEndpoint {
     public String getPerson(@Selector String person) {
         return this.people.get(person);
     }
+
 
     @WriteOperation(produces = {"application/json"})
     public void updatePerson(String name, String person) {

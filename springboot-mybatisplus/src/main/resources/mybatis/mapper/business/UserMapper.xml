@@ -4,13 +4,20 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.ley.springboot.mybatisplus.business.entity.User">
-        <id column="user_id" property="userId" />
-        <result column="user_name" property="userName" />
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         user_id, user_name
     </sql>
+
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_user
+        where user_id = #{userId}
+    </select>
 
 </mapper>

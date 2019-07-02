@@ -58,13 +58,14 @@ public class YamlPropertySourceAnnotationPostProcessor extends InstantiationAwar
 
     @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
+        Assert.notNull(resourceLoader, "resourceLoader must not be null.");
         this.resourceLoader = resourceLoader;
     }
 
 
     @Override
     public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
-        // Process any @PropertySource annotations
+        // Process any @YamlPropertySource annotations
         Set<YamlPropertySource> yamlPropertySources = AnnotationUtils.getRepeatableAnnotations(bean.getClass(),
                 YamlPropertySource.class, YamlPropertySources.class);
         if (!yamlPropertySources.isEmpty()) {
@@ -106,6 +107,7 @@ public class YamlPropertySourceAnnotationPostProcessor extends InstantiationAwar
 
         for (String location : locations) {
             try {
+                //处理占位符${...}
                 String resolvedLocation = this.environment.resolveRequiredPlaceholders(location);
                 Resource resource = this.resourceLoader.getResource(resolvedLocation);
                 if (resource.getInputStream() != null) {

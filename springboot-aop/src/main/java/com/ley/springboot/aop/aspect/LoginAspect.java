@@ -5,11 +5,13 @@ import com.ley.springboot.aop.annotation.NeedLogin;
 import com.ley.springboot.commons.aop.AopUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +26,8 @@ import java.lang.reflect.Method;
 
 /**
  * 用于登录拦截的切面,如果用户没有登录,不能访问(AOP只能拦截到方法级)
+ *
+ * @author liuenyuan
  **/
 @Aspect
 @Component
@@ -58,6 +62,8 @@ public class LoginAspect {
             return gson.toJson("您还没登录");
         }
     }
+
+
 
 
     private HttpServletRequest getRequest() {

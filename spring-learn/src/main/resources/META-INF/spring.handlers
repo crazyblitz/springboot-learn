@@ -1,0 +1,5 @@
+http\://www.liuenyuan.com/schema/myns=\
+com.ley.springboot.schema.xml.MynsNamespaceHandler
+
+http\://www.liuenyuan.com/schema/component=\
+  com.ley.springboot.schema.xml.nest.ComponentNamespaceHandler

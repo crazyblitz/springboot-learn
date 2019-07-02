@@ -5,6 +5,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.*;
 
+/**
+ * @author liuenyuan
+ **/
 public class MyInjectAnnotationBeanProcessorRegistrar implements BeanDefinitionRegistryPostProcessor {
 
     @Override

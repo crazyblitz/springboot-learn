@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternUtils;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -47,17 +48,11 @@ public class MybatisConfig {
     @Value("${mybatis.config-location}")
     private String configLocation;
 
-    /**
-     * 分离数据源的时候,尽量使用这种方式,不要直接注入数据源,可能会出现bean注入循环依赖
-     **/
-    @Autowired
-    private DruidDataSourceConfig druidDataSourceConfig;
-
     @Bean("sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
+    public SqlSessionFactory sqlSessionFactory(DruidDataSourceConfig druidDataSourceConfig) throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(druidDataSourceConfig.dynamicDataSource(druidDataSourceConfig.db1(), druidDataSourceConfig.db2()));
-        ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+        ResourcePatternResolver resourcePatternResolver = ResourcePatternUtils.getResourcePatternResolver(null);
         Resource[] mapperResources = resourcePatternResolver.getResources(mapperLocations);
         sqlSessionFactory.setMapperLocations(mapperResources);
         sqlSessionFactory.setConfigLocation(resourcePatternResolver.getResource(configLocation));

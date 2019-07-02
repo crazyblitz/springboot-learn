@@ -19,7 +19,7 @@ public class PersonEndPointConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnEnabledEndpoint
+    @ConditionalOnEnabledEndpoint(endpoint = PersonEndpoint.class)
     public PersonEndpoint personEndpoint() {
         return new PersonEndpoint();
     }

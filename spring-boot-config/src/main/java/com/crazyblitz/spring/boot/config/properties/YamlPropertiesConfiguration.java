@@ -1,4 +1,4 @@
-package com.crazyblitz.spring.boot.config;
+package com.crazyblitz.spring.boot.config.properties;
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;

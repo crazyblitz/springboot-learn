@@ -1,4 +1,4 @@
-package com.crazyblitz.spring.boot.config;
+package com.crazyblitz.spring.boot.config.properties;
 
 import com.crazyblitz.spring.boot.config.annotation.YamlPropertySource;
 import lombok.Data;
@@ -18,7 +18,7 @@ import org.springframework.context.annotation.PropertySource;
  * @see org.springframework.core.io.support.ResourcePropertySource
  */
 @ConfigurationProperties(prefix = "person")
-@YamlPropertySource(value = {"classpath:/hello2.yml"}, name = "hello", encoding = "UTF-8")
+@YamlPropertySource(value = {"classpath:/hello1.yml"}, name = "hello", encoding = "UTF-8")
 @Data
 public class PersonProperties {
 

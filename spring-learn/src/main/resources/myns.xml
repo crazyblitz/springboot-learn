@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+       xmlns:my="http://www.liuenyuan.com/schema/myns"
+
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans
+                                http://www.springframework.org/schema/beans/spring-beans.xsd
+                                http://www.liuenyuan.com/schema/myns
+                                http://www.liuenyuan.com/schema/myns.xsd">
+
+    <my:dateFormat id="dateFormat" pattern="yyyy-MM-dd HH:mm:ss"/>
+
+</beans>
