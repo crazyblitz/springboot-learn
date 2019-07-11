@@ -1,33 +1,26 @@
 package com.gitee.ley.mybatis.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternUtils;
-
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.Properties;
-
 /**
  * mybatis configuration(建议使用配置类的方式重新声明相关bean)
  *
@@ -48,6 +41,13 @@ public class MybatisConfig {
     @Value("${mybatis.config-location}")
     private String configLocation;
 
+
+    private final Interceptor[] interceptors;
+
+    public MybatisConfig(ObjectProvider<Interceptor[]> interceptors) {
+        this.interceptors = interceptors.getIfAvailable();
+    }
+
     @Bean("sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(DruidDataSourceConfig druidDataSourceConfig) throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
@@ -56,6 +56,7 @@ public class MybatisConfig {
         Resource[] mapperResources = resourcePatternResolver.getResources(mapperLocations);
         sqlSessionFactory.setMapperLocations(mapperResources);
         sqlSessionFactory.setConfigLocation(resourcePatternResolver.getResource(configLocation));
+        sqlSessionFactory.setPlugins(interceptors);
         SqlSessionFactory sessionFactory = sqlSessionFactory.getObject();
         sessionFactory.getConfiguration().setDefaultExecutorType(ExecutorType.REUSE);
         log.info("config location: {},mapper locations: {}", configLocation, mapperLocations);
@@ -74,4 +75,5 @@ public class MybatisConfig {
     public SqlSessionTemplate batchSqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory, ExecutorType.BATCH);
     }
+
 }

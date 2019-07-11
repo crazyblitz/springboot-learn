@@ -59,5 +59,6 @@
     <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-test:5.0.13.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.xmlunit:xmlunit-core:2.5.1" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
   </component>
 </module>

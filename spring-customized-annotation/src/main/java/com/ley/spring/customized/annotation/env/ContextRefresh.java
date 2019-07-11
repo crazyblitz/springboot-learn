@@ -1,6 +1,5 @@
 package com.ley.spring.customized.annotation.env;
 
-import com.ley.spring.customized.annotation.file.FileListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.builder.SpringApplicationBuilder;

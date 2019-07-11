@@ -28,7 +28,9 @@ public class FileListener extends FileAlterationListenerAdaptor {
 
     @Override
     public void onDirectoryDelete(File directory) {
-        log.info("delete directory: {}", directory.getName());
+        if (log.isDebugEnabled()) {
+            log.debug("delete directory: {}", directory.getName());
+        }
     }
 
     @Override

@@ -4,3 +4,5 @@ spring:
     active: v1
 logging:
   config: classpath:spring-logback.xml
+  level:
+    com.gitee.ley.mybatis: debug

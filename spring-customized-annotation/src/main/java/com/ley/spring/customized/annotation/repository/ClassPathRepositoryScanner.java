@@ -75,7 +75,7 @@ public class ClassPathRepositoryScanner extends ClassPathBeanDefinitionScanner {
         boolean isDebugEnabled = log.isDebugEnabled();
         if (isDebugEnabled) {
             beanDefinitions.stream().map(BeanDefinitionHolder::getBeanName).collect(Collectors.toList())
-                    .forEach(beanName -> log.info(beanName));
+                    .forEach(beanName -> log.debug(beanName));
         }
         return beanDefinitions;
     }

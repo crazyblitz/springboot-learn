@@ -31,7 +31,7 @@ public class EnvironmentTest implements EnvironmentAware{
      * System environment property source name: {@value}
      **/
     public void getSystemEnvironment() {
-        log.info("system properties.");
+        log.info("system properties");
         if (this.environment instanceof ConfigurableEnvironment) {
             ConfigurableEnvironment configurableEnvironment = (ConfigurableEnvironment) environment;
             MapPropertySource systemEnvironment = new MapPropertySource(StandardEnvironment.SYSTEM_ENVIRONMENT_PROPERTY_SOURCE_NAME,
@@ -46,7 +46,7 @@ public class EnvironmentTest implements EnvironmentAware{
 
 
     public void getSystemProperties() {
-        log.info("jvm properties.");
+        log.info("jvm properties");
         if (this.environment instanceof ConfigurableEnvironment) {
             ConfigurableEnvironment configurableEnvironment = (ConfigurableEnvironment) environment;
             MapPropertySource systemProperties = new MapPropertySource(StandardEnvironment.SYSTEM_PROPERTIES_PROPERTY_SOURCE_NAME,
@@ -70,7 +70,6 @@ public class EnvironmentTest implements EnvironmentAware{
         MutablePropertySources propertySources = configurableEnvironment.getPropertySources();
         PropertySource<?> propertySource = propertySources.get(applicationConfigName);
         log.info("source:{}", propertySource.getSource());
-
         propertySources.forEach(propertySource1 -> log.info("source: {}", propertySource1.getSource()));
     }
 }

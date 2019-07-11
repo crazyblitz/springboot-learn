@@ -30,7 +30,7 @@ public class UserRepositoryTest {
         users.add(new User(UUID.randomUUID().toString(), "刘恩源3", 23));
         users.add(new User(UUID.randomUUID().toString(), "刘恩源4", 24));
         users.add(new User(UUID.randomUUID().toString(), "刘恩源5", 25));
-        userRepository.save(users);
+        userRepository.saveAll(users);
     }
 
 

@@ -7,6 +7,8 @@ import java.lang.annotation.*;
 
 /**
  * MyRepository scan
+ *
+ * @author liuenyaun
  **/
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

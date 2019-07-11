@@ -2,6 +2,8 @@ package com.gitee.ley.mybatis.utils;
 
 /**
  * datasource type enum(数据源名称枚举,尽量是数据库名称)
+ *
+ * @author liuenyuan
  **/
 public enum DBTypeEnum {
 

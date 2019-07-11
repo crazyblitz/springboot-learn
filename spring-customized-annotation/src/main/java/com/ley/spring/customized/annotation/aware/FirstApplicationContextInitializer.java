@@ -6,6 +6,9 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
 
+/**
+ * @author liuenyuan
+ **/
 @Slf4j
 public class FirstApplicationContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext>, Ordered {
 
