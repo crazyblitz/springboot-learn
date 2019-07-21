@@ -40,6 +40,8 @@
         <module>spring-boot-config</module>
         <module>spring-important-annotation</module>
         <module>spring-boot-mybatis-pagehelper</module>
+        <module>spring-boot-orika</module>
+        <module>springboot-jwt</module>
     </modules>
     <packaging>pom</packaging>
 

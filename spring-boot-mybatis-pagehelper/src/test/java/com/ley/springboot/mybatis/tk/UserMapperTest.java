@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,5 +38,13 @@ public class UserMapperTest {
     @Test
     public void testTkMapper() {
         log.info("get: {}", userMapper.selectByPrimaryKey(1));
+    }
+
+    @Test
+    public void testTkMapperByExample() {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andGreaterThan("userAge", 22);
+        System.out.println(userMapper.selectByExample(example));
     }
 }
