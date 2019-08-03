@@ -25,6 +25,4 @@ hs_err_pid*
 #忽略.idea目录
 .idea/
 target/
-*data/
-
 *.iml
