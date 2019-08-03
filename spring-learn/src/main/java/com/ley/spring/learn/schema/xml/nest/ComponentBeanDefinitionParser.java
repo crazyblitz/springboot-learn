@@ -22,7 +22,7 @@ public class ComponentBeanDefinitionParser extends AbstractBeanDefinitionParser 
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(ComponentFactoryBean.class);
         factory.addPropertyValue("parent", parseComponent(element));
         List<Element> childElements = DomUtils.getChildElementsByTagName(element, "component");
-        if (childElements != null && childElements.size() > 0) {
+        if (childElements.size() > 0) {
             parseChildComponents(childElements, factory);
         }
         return factory.getBeanDefinition();

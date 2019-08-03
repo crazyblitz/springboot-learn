@@ -2,6 +2,8 @@ package com.ley.java.learn.jdk8.function;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -36,5 +38,22 @@ public class FunctionLearnTest {
         //先计算后一个,在就散前一个
         Function<Integer, Integer> function2 = e -> e * 3;
         System.out.println(function.compose(function2).apply(3));
+    }
+
+    @Test
+    public void testLamdba() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        List<Integer> list2 = new ArrayList<>();
+        list2.add(4);
+        list2.add(5);
+        list2.add(6);
+
+        list.forEach(x -> {
+            list2.forEach(y -> System.out.print(x + "+" + y + "=" + (x + y) + " "));
+            System.out.println();
+        });
     }
 }

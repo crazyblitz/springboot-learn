@@ -61,6 +61,7 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
         if (registry instanceof GenericConversionService) {
             GenericConversionService conversionService = (GenericConversionService) registry;
             Field convertersField = ReflectionUtils.findField(conversionService.getClass(), PROPERTY_CONVERTERS_NAME);
+            assert convertersField != null;
             ReflectionUtils.makeAccessible(convertersField);
             try {
                 Object converters = convertersField.get(conversionService);

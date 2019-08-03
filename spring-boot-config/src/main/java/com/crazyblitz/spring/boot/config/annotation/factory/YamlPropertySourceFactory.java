@@ -8,6 +8,7 @@ import org.springframework.core.io.support.EncodedResource;
 import org.springframework.core.io.support.PropertySourceFactory;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -28,12 +29,16 @@ public class YamlPropertySourceFactory extends DefaultPropertySourceFactory {
 
     @Override
     public PropertySource<?> createPropertySource(String name, EncodedResource encodedResource) throws IOException {
-        if (encodedResource.getResource().getFilename().contains(YML_SUFFIX) ||
-                encodedResource.getResource().getFilename().contains(YAML_SUFFIX)) {
+        if (Objects.requireNonNull(encodedResource.getResource().getFilename()).contains(YML_SUFFIX)) {
             yamlPropertiesFactoryBean.setResources(encodedResource.getResource());
             Properties properties = yamlPropertiesFactoryBean.getObject();
-            PropertiesPropertySource propertySource = new PropertiesPropertySource(name, properties);
-            return propertySource;
+            assert properties != null;
+            return new PropertiesPropertySource(name, properties);
+        } else if (encodedResource.getResource().getFilename().contains(YAML_SUFFIX)) {
+            yamlPropertiesFactoryBean.setResources(encodedResource.getResource());
+            Properties properties = yamlPropertiesFactoryBean.getObject();
+            assert properties != null;
+            return new PropertiesPropertySource(name, properties);
         } else {
             return super.createPropertySource(name, encodedResource);
         }
