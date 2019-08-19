@@ -3,6 +3,9 @@ package com.ley.spring.learn.event;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Aliue
+ */
 @Component
 public class HelloEventListener implements ApplicationListener<HelloEvent> {
 

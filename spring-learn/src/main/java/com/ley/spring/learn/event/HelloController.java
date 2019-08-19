@@ -16,8 +16,8 @@ public class HelloController implements ApplicationEventPublisherAware {
     }
 
     @GetMapping("/event")
-    public String helloEvent() {
+    public String helloEvent(String username) {
         applicationEventPublisher.publishEvent(new HelloEvent("Hello World"));
-        return "HelloWorld.";
+        return username;
     }
 }
