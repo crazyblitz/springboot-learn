@@ -26,3 +26,5 @@ hs_err_pid*
 .idea/
 *.iml
 */target
+
+spring-boot-acm/**/application.yml
