@@ -13,6 +13,8 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.springframework.beans.BeanUtils.instantiateClass;
+
 /**
  * 类描述: {@link org.springframework.core.io.support.SpringFactoriesLoader}
  *
@@ -71,7 +73,7 @@ public class SpringFactoriesUtils {
                 Assert.isAssignable(type, instanceClass);
                 Constructor<?> constructor = instanceClass
                         .getDeclaredConstructor(parameterTypes);
-                T instance = (T) BeanUtils.instantiateClass(constructor, args);
+                T instance = (T) instantiateClass(constructor, args);
                 instances.add(instance);
             } catch (Throwable ex) {
                 throw new IllegalArgumentException(

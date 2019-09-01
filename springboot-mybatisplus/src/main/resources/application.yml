@@ -28,4 +28,7 @@ spring:
 mybatis-plus:
   mapper-locations: classpath:/mybatis/mapper/**/*Mapper.xml
   config-location: classpath:/config/mybatis-config.xml
-  
+
+logging:
+  level:
+    com.ley.springboot.mybatisplus: debug

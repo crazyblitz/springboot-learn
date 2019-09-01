@@ -110,7 +110,7 @@ public class YamlPropertySourceAnnotationPostProcessor extends InstantiationAwar
                 //处理占位符${...}
                 String resolvedLocation = this.environment.resolveRequiredPlaceholders(location);
                 Resource resource = this.resourceLoader.getResource(resolvedLocation);
-                if (resource.getInputStream() != null) {
+                if (resource != null) {
                     addPropertySource(factory.createPropertySource(name, new EncodedResource(resource, encoding)));
                 }
             } catch (Throwable ex) {

@@ -2,17 +2,21 @@ package com.ley.springboot.mybatisplus;
 
 import com.ley.springboot.mybatisplus.business.entity.User;
 import com.ley.springboot.mybatisplus.business.mapper.UserMapper;
+import com.ley.springboot.mybatisplus.business.service.MyUserService;
 import com.ley.springboot.mybatisplus.business.service.UserService;
+import com.ley.springboot.mybatisplus.business.service.impl.MyUserServiceImpl;
 import com.ley.springboot.mybatisplus.utils.SqlSessionFactoryUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.StopWatch;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -28,6 +32,17 @@ public class MybatisPlusTest {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private MyUserService myUserService;
+
+    @Test
+    public void testMyUserService(){
+        User user=new User();
+        user.setUserName("刘恩源");
+        System.out.println(Arrays.asList(AopProxyUtils.proxiedUserInterfaces(myUserService)));
+        MyUserServiceImpl.getInstance().insertSelective(user);
+    }
 
     /**
      *

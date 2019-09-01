@@ -191,9 +191,9 @@ public class ContextRefresh {
             if (input.getPropertySources().contains(name)) {
                 if (capturedPropertySources.contains(name)) {
                     capturedPropertySources.replace(name,
-                            input.getPropertySources().get(name));
+                            Objects.requireNonNull(input.getPropertySources().get(name)));
                 } else {
-                    capturedPropertySources.addLast(input.getPropertySources().get(name));
+                    capturedPropertySources.addLast(Objects.requireNonNull(input.getPropertySources().get(name)));
                 }
             }
         }

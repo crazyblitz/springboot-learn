@@ -45,10 +45,8 @@ public class AnnotationAttributeApplication {
 
     private static void print0(AnnotationAttributes annotationAttributes) {
         System.out.printf("注解 %s 属性集合 : \n", annotationAttributes.annotationType().getName());
-
         annotationAttributes.forEach((name, value) -> System.out.printf("\t 属性 %s : %s \n",
                 name, value));
-
 
     }
 }

@@ -36,9 +36,9 @@ public class SpringFactoriesApplication {
         Method method = ReflectionUtils.findMethod(clazz, "isFullConfigurationClass", BeanDefinition.class);
         ReflectionUtils.makeAccessible(method);
         BeanDefinition beanDefinition = ctx.getBeanDefinition("userConfiguration");
-        List<String> attributeNames = Arrays.asList(beanDefinition
-                .attributeNames()).stream().collect(Collectors.toList());
-        attributeNames.stream().map(name -> beanDefinition.getAttribute(name))
+        List<String> attributeNames = Arrays.stream(beanDefinition
+                .attributeNames()).collect(Collectors.toList());
+        attributeNames.stream().map(beanDefinition::getAttribute)
                 .collect(Collectors.toSet()).forEach(System.out::println);
 
         System.out.println(method.invoke(clazz, ctx.getBeanDefinition("userConfiguration")));
