@@ -27,4 +27,6 @@ hs_err_pid*
 *.iml
 */target
 
-spring-boot-acm/**/application.yml
+spring-boot-acm/**/application.properties
+
+*/**/*.iml
