@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.io.Serializable;
 
-@Document(indexName = "springboot-learn", type = "user")
+@Document(indexName = "elasticsearch_demo", type = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

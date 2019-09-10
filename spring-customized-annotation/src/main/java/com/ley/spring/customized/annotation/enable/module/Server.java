@@ -1,4 +1,4 @@
-package com.ley.spring.customized.annotation.selector;
+package com.ley.spring.customized.annotation.enable.module;
 
 /**
  * 类描述:

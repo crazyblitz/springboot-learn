@@ -1,4 +1,4 @@
-package com.ley.spring.customized.annotation.repository;
+package com.ley.spring.customized.annotation.derivative.repository;
 
 
 import java.lang.annotation.*;

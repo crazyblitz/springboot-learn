@@ -1,5 +1,7 @@
-package com.ley.spring.customized.annotation.selector;
+package com.ley.spring.customized.annotation.enable.module.registrar;
 
+import com.ley.spring.customized.annotation.enable.module.EnableServerRegistrar;
+import com.ley.spring.customized.annotation.enable.module.Server;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
@@ -7,16 +9,16 @@ import org.springframework.context.annotation.Configuration;
  * 类描述:
  *
  * @author liuenyuan
- * @date 2019/4/22 10:28
+ * @date 2019/5/7 13:12
  * @describe
  */
+@EnableServerRegistrar
 @Configuration
-@EnableServer
-public class ImportSelectorApplication {
+public class ImportRegistrarApplication {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
-        ctx.register(ImportSelectorApplication.class);
+        ctx.register(ImportRegistrarApplication.class);
         //启动上下文
         ctx.refresh();
         Server server = ctx.getBean(Server.class);

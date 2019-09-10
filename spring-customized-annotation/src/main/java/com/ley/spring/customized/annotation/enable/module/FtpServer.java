@@ -1,4 +1,4 @@
-package com.ley.spring.customized.annotation.selector;
+package com.ley.spring.customized.annotation.enable.module;
 
 import lombok.extern.slf4j.Slf4j;
 

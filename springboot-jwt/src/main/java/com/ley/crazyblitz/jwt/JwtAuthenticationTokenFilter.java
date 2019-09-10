@@ -51,7 +51,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Value("${jwt.expiration}")
     private String expiration;
 
-    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "00000000000";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -64,7 +64,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         String tokenHeader = request.getHeader(this.tokenHeader);
         if (tokenHeader != null && tokenHeader.startsWith(TOKEN_PREFIX)) {
-            String authToken = tokenHeader.substring(7);
+            String authToken = tokenHeader.substring(11);
             String username = jwtTokenUtils.getUsernameFromToken(authToken, secret);
             if (username != null && jwtTokenUtils.validateToken(authToken, username, secret)) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);

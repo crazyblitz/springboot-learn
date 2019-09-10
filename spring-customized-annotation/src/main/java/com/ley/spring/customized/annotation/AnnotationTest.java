@@ -1,6 +1,6 @@
 package com.ley.spring.customized.annotation;
 
-import com.ley.spring.customized.annotation.business.OrderRepository;
+import com.ley.spring.customized.annotation.derivative.business.OrderRepository;
 import org.junit.Test;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;

@@ -1,4 +1,4 @@
-package com.ley.spring.customized.annotation.repository;
+package com.ley.spring.customized.annotation.derivative.repository;
 
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;

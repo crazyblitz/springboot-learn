@@ -27,7 +27,7 @@ mybatis-plus:
 jwt:
   secret: secret
   #默认是15秒
-  expiration: 15
+  expiration: 180
   token: Authorization
 
 

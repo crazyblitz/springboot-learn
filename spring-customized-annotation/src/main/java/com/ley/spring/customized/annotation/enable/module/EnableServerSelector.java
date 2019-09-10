@@ -1,5 +1,7 @@
-package com.ley.spring.customized.annotation.selector;
+package com.ley.spring.customized.annotation.enable.module;
 
+import com.ley.spring.customized.annotation.enable.module.Server;
+import com.ley.spring.customized.annotation.enable.module.ServerImportSelector;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
@@ -15,8 +17,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Import(ServerImportSelector.class)
-//@Import(ServerImportSelectorRegistrar.class)
-public @interface EnableServer {
+public @interface EnableServerSelector {
 
     /**
      * server type

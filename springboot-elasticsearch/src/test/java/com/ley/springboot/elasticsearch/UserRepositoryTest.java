@@ -12,9 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = {ElasticsearchApplication.class})
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = {ElasticsearchApplication.class})
 @Slf4j
 public class UserRepositoryTest {
 
@@ -36,6 +37,30 @@ public class UserRepositoryTest {
 
     @Test
     public void testFind() {
-        log.info("users: {}", userRepository.findUsersByNameAndAgeIsGreaterThan("刘恩", 20).size());
+        log.info("users: {}", userRepository.findUsersByNameAndAgeIsGreaterThan("刘", 21));
+    }
+
+    @Test
+    public void testAtomicFieldUpdater() {
+        // 设置柯南的年龄是10岁
+        AtomicIntegerFieldUpdaterTest atomicIntegerFieldUpdaterTest = new AtomicIntegerFieldUpdaterTest();
+        atomicIntegerFieldUpdaterTest.test();
+    }
+
+}
+
+class AtomicIntegerFieldUpdaterTest {
+    // 创建原子更新器，并设置需要更新的对象类和对象的属性
+    private static AtomicIntegerFieldUpdater<com.ley.springboot.elasticsearch.User> a =
+            AtomicIntegerFieldUpdater.newUpdater(com.ley.springboot.elasticsearch.User.class, "old");
+
+
+    public void test() {
+        // 设置柯南的年龄是10岁
+        com.ley.springboot.elasticsearch.User conan = new com.ley.springboot.elasticsearch.User("conan", 10);
+        // 柯南长了一岁，但是仍然会输出旧的年龄
+        System.out.println(a.getAndIncrement(conan));
+        // 输出柯南现在的年龄
+        System.out.println(a.get(conan));
     }
 }

@@ -1,18 +1,13 @@
-package com.ley.spring.customized.annotation.repository;
+package com.ley.spring.customized.annotation.derivative.repository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanNameGenerator;
-import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import java.lang.annotation.Annotation;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -72,10 +67,9 @@ public class ClassPathRepositoryScanner extends ClassPathBeanDefinitionScanner {
     @Override
     protected Set<BeanDefinitionHolder> doScan(String... basePackages) {
         Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
-        boolean isDebugEnabled = log.isDebugEnabled();
-        if (isDebugEnabled) {
+        if (log.isInfoEnabled()) {
             beanDefinitions.stream().map(BeanDefinitionHolder::getBeanName).collect(Collectors.toList())
-                    .forEach(beanName -> log.debug(beanName));
+                    .forEach(log::info);
         }
         return beanDefinitions;
     }

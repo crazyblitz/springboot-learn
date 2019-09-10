@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
+import org.springframework.core.PriorityOrdered;
 
 /**
  * @author liuenyuan
@@ -27,5 +28,6 @@ public class FirstApplicationContextInitializer implements ApplicationContextIni
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
         applicationContext.setId("刘恩源");
+        log.info(applicationContext.getId());
     }
 }

@@ -1,4 +1,4 @@
-package com.ley.spring.customized.annotation.selector;
+package com.ley.spring.customized.annotation.enable.module;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -23,7 +23,7 @@ public class ServerImportSelectorRegistrar implements ImportBeanDefinitionRegist
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableServer.class.getName()));
+        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableServerRegistrar.class.getName()));
         Server.Type type = annotationAttributes.getEnum("type");
         log.info(ClassUtils.getPackageName(importingClassMetadata.getClassName()));
         switch (type) {
@@ -51,7 +51,7 @@ public class ServerImportSelectorRegistrar implements ImportBeanDefinitionRegist
      * @see BeanDefinitionReaderUtils
      **/
     public void registerBeanDefinitionsWithBeanDefinitionReaderUtils(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableServer.class.getName()));
+        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableServerRegistrar.class.getName()));
         Server.Type type = annotationAttributes.getEnum("type");
         switch (type) {
             case HTTP:

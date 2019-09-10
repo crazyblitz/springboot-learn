@@ -1,4 +1,4 @@
-package com.ley.spring.customized.annotation.selector;
+package com.ley.spring.customized.annotation.enable.module;
 
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -21,7 +21,7 @@ public class ServerImportSelector implements ImportSelector {
 
         //读取EnableServer所有属性和方法
         //其中key为属性方法名称,value为属性方法返回对象
-        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableServer.class.getName()));
+        AnnotationAttributes annotationAttributes = AnnotationAttributes.fromMap(importingClassMetadata.getAnnotationAttributes(EnableServerSelector.class.getName()));
 
         //获取名为"type"的属性方法,强制转换为Server.Type类型
         Server.Type type = annotationAttributes.getEnum("type");
