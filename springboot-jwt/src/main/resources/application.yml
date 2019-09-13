@@ -24,6 +24,7 @@ mybatis-plus:
   mapper-locations: classpath:/mybatis/mapper/**/*Mapper.xml
   config-location: classpath:/config/mybatis-config.xml
 
+
 jwt:
   secret: secret
   #默认是15秒

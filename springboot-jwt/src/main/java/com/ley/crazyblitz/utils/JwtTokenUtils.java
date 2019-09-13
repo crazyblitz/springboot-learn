@@ -91,7 +91,7 @@ public class JwtTokenUtils implements Serializable {
     public String generateToken(String userName, String secret, Long expiration) {
         Map<String, Object> claims = new HashMap<>(2);
         claims.put(CLAIM_KEY_USERNAME, userName);
-        claims.put(CLAIM_KEY_CREATED, new Date());
+        claims.put(CLAIM_KEY_CREATED, new Date(System.currentTimeMillis()));
         return generateToken(claims, secret, expiration);
     }
 

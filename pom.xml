@@ -44,6 +44,7 @@
         <module>springboot-jwt</module>
         <module>springboot-guava</module>
         <module>spring-boot-acm</module>
+        <module>springboot-state-pattern</module>
     </modules>
     <packaging>pom</packaging>
 
