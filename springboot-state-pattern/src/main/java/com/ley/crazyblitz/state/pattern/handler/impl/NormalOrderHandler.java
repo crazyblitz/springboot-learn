@@ -6,7 +6,7 @@ import com.ley.crazyblitz.state.pattern.handler.OrderHandler;
 import org.springframework.stereotype.Component;
 
 @Component
-@OrderHandlerType("1")
+@OrderHandlerType("4")
 public class NormalOrderHandler implements OrderHandler {
     @Override
     public String handle(Order order) {

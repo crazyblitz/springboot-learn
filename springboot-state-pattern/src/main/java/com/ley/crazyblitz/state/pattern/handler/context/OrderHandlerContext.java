@@ -10,6 +10,7 @@ import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -34,7 +35,12 @@ public class OrderHandlerContext implements SmartInitializingSingleton, Applicat
             orderHandlers.forEach((key, value) -> {
                 OrderHandlerType orderHandlerType = AnnotationUtils.findAnnotation(value.getClass(), OrderHandlerType.class);
                 if (orderHandlerType != null) {
-                    orderHandlerMap.put(orderHandlerType.value(), value.getClass());
+                    if (!orderHandlerMap.containsKey(orderHandlerType.value())) {
+                        orderHandlerMap.put(orderHandlerType.value(), value.getClass());
+                    } else {
+                        throw new IllegalArgumentException(String.format("OrderHandlerContext.orderHandlerMap already constains " +
+                                "order type %s,please check your logic.", orderHandlerType.value()));
+                    }
                 }
             });
             if (log.isInfoEnabled()) {
@@ -46,7 +52,7 @@ public class OrderHandlerContext implements SmartInitializingSingleton, Applicat
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
