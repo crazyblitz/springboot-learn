@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/springboot-shiro?characterEncoding=utf-8&useSSL=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    druid:
+      stat-view-servlet:
+        login-password: admin
+        login-username: admin
+        allow: 127.0.0.1
+        reset-enable: false
+        url-pattern: /druid/*
+      web-stat-filter:
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      filter:
+        wall:
+          log-violation: true
+          throw-exception: false
+          config:
+            multi-statement-allow: true
+  swagger:
+    title: "springboot shiro system rest api."
+    version: "1.0.0"
+
+mybatis-plus:
+  mapper-locations: classpath:/mybatis/mapper/**/*Mapper.xml
+  config-location: classpath:/config/mybatis-config.xml
+
+logging:
+  level:
+    com.crazyblitz.springboot.shiro: debug
+
+server:
+  port: 9090

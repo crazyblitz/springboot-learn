@@ -45,6 +45,7 @@
         <module>springboot-guava</module>
         <module>spring-boot-acm</module>
         <module>springboot-state-pattern</module>
+        <module>springboot-shiro</module>
     </modules>
     <packaging>pom</packaging>
 

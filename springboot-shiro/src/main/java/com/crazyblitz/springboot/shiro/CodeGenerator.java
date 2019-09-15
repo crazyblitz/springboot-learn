@@ -1,4 +1,4 @@
-package com.ley.springboot.mybatisplus.utils;
+package com.crazyblitz.springboot.shiro;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
@@ -12,7 +12,8 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import com.ley.springboot.mybatisplus.utils.constants.CodeConstants;
+import com.crazyblitz.springboot.shiro.utils.constants.CodeConstants;
+
 
 import java.io.File;
 import java.util.ArrayList;
@@ -111,6 +112,7 @@ public class CodeGenerator {
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 
         strategy.setEntityLombokModel(true);
+        strategy.setEntityTableFieldAnnotationEnable(true);
         strategy.setRestControllerStyle(true);
         strategy.setInclude(scanner("表名"));
         strategy.setControllerMappingHyphenStyle(true);
@@ -119,7 +121,6 @@ public class CodeGenerator {
         strategy.setSuperServiceImplClass(null);
         strategy.setSuperMapperClass(null);
         strategy.setSuperEntityClass("");
-        strategy.setEntityTableFieldAnnotationEnable(true);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();

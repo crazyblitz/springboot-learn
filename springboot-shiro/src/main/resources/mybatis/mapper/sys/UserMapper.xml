@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ley.springboot.mybatisplus.business.mapper.UserMapper">
+<mapper namespace="com.crazyblitz.springboot.shiro.sys.mapper.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ley.springboot.mybatisplus.business.entity.User">
+    <resultMap id="BaseResultMap" type="com.crazyblitz.springboot.shiro.sys.entity.User">
         <id column="user_id" property="userId" />
         <result column="user_name" property="userName" />
-        <result column="user_age" property="userAge" />
+        <result column="user_salt" property="userSalt" />
         <result column="user_password" property="userPassword" />
+        <result column="create_time" property="createTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, user_name, user_age, user_password
+        user_id, user_name, user_salt, user_password, create_time
     </sql>
 
 </mapper>

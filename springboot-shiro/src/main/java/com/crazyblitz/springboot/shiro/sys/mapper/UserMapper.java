@@ -1,6 +1,6 @@
-package com.ley.springboot.mybatisplus.business.mapper;
+package com.crazyblitz.springboot.shiro.sys.mapper;
 
-import com.ley.springboot.mybatisplus.business.entity.User;
+import com.crazyblitz.springboot.shiro.sys.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author liuenyuan
- * @since 2019-09-15
+ * @since 2019-09-14
  */
 public interface UserMapper extends BaseMapper<User> {
 

@@ -1,4 +1,4 @@
-package com.ley.springboot.mybatisplus.business.controller;
+package com.crazyblitz.springboot.shiro.sys.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author liuenyuan
- * @since 2019-09-15
+ * @since 2019-09-14
  */
 @RestController
-@RequestMapping("/business/user")
-public class UserController {
+@RequestMapping("/sys/user-role")
+public class UserRoleController {
 
 }
