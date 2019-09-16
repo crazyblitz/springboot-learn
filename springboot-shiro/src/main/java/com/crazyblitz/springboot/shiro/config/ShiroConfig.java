@@ -102,8 +102,6 @@ public class ShiroConfig {
      * <p>
      * 使用代理方式;所以需要开启代码支持;
      * Controller才能使用@RequiresPermissions
-     *
-     * @param securityManager
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(

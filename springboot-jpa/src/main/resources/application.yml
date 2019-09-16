@@ -4,8 +4,22 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      idle-timeout: 30000
+      max-lifetime: 18000000
+      auto-commit: true
+      connection-timeout: 30000
+      connection-test-query: select 1
+      minimum-idle: 5
+      maximum-pool-size: 15
+      pool-name: JpaHikariCP
   jpa:
     database: mysql
     show-sql: true
     hibernate:
       ddl-auto: update
+logging:
+  level:
+    com.ley.springboot.jpa: debug
+    com.zaxxer.hikari: debug

@@ -21,11 +21,11 @@ public class ShiroHelperConfig {
         return new LifecycleBeanPostProcessor();
     }
 
-    @Bean
-    @DependsOn("lifecycleBeanPostProcessor")
-    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
-        DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
-        creator.setProxyTargetClass(true);
-        return creator;
-    }
+//    @Bean
+//    @DependsOn("lifecycleBeanPostProcessor")
+//    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+//        DefaultAdvisorAutoProxyCreator creator = new DefaultAdvisorAutoProxyCreator();
+//        creator.setProxyTargetClass(true);
+//        return creator;
+//    }
 }
