@@ -1,0 +1,3 @@
+logging:
+  level:
+    com.ley.springboot.aop.advisor: info
