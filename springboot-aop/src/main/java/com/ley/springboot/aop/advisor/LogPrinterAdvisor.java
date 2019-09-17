@@ -3,11 +3,10 @@ package com.ley.springboot.aop.advisor;
 import org.springframework.aop.support.StaticMethodMatcherPointcutAdvisor;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-@Component
 public class LogPrinterAdvisor extends StaticMethodMatcherPointcutAdvisor {
 
     public LogPrinterAdvisor() {

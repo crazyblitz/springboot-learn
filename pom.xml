@@ -43,7 +43,6 @@
         <module>spring-boot-orika</module>
         <module>springboot-jwt</module>
         <module>springboot-guava</module>
-        <module>spring-boot-acm</module>
         <module>springboot-state-pattern</module>
         <module>springboot-shiro</module>
     </modules>
