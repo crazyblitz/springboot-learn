@@ -8,12 +8,13 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.*;
+import org.springframework.lang.NonNull;
 
 @Slf4j
 public class LogAdvisorPostProcessor implements BeanDefinitionRegistryPostProcessor {
 
     @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+    public void postProcessBeanDefinitionRegistry(@NonNull BeanDefinitionRegistry registry) throws BeansException {
         if (!registry.containsBeanDefinition(AopConfigUtils.AUTO_PROXY_CREATOR_BEAN_NAME)) {
             BeanDefinition definition = BeanDefinitionBuilder.rootBeanDefinition(DefaultAdvisorAutoProxyCreator.class).getBeanDefinition();
             definition.getPropertyValues().addPropertyValue("proxyTargetClass", Boolean.TRUE);
@@ -25,7 +26,7 @@ public class LogAdvisorPostProcessor implements BeanDefinitionRegistryPostProces
     }
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanFactory(@NonNull ConfigurableListableBeanFactory beanFactory) throws BeansException {
 
     }
 }

@@ -1,34 +1,30 @@
 package com.ley.springboot.aop.controller;
 
+import com.google.gson.Gson;
+import com.ley.springboot.aop.annotation.NeedLogin;
 import com.ley.springboot.aop.bean.User;
+import com.ley.springboot.aop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
 
-    private static List<User> users = new ArrayList<>();
 
-    static {
-        users.add(new User(UUID.randomUUID().toString(), "刘恩源"));
-        users.add(new User(UUID.randomUUID().toString(), "刘恩源1"));
-        users.add(new User(UUID.randomUUID().toString(), "刘恩源2"));
+    @Autowired
+    private UserService userService;
 
-    }
+    @Autowired
+    private Gson gson;
 
-    @GetMapping("/")
-    public List<User> getUserByUserName() {
-        return users;
-    }
-
-
-    public static List<User> getUsers() {
-        return users;
+    @GetMapping("")
+    @NeedLogin
+    public String getUserByUserName(HttpServletRequest request) {
+        return gson.toJson(userService.listUsers());
     }
 }

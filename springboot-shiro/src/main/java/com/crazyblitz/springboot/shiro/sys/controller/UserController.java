@@ -48,6 +48,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/sys/user")
 @Slf4j
 @Api("User Controller")
+@RequiresAuthentication
 public class UserController {
 
     @Autowired
@@ -100,7 +101,6 @@ public class UserController {
     @ApiOperation("/管理员查询用户列表(模糊查询)")
     @GetMapping("/list")
     @RequiresRoles(value = {ProjectConstants.ROLE_ADMIN})
-    @RequiresAuthentication
     public Result listUsers(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam(required = false) String userName) {
         IPage<User> page = new Page<>(pageNum, pageSize);
         if (StringUtils.hasText(userName)) {
@@ -116,7 +116,6 @@ public class UserController {
     @ApiOperation("修改用户密码")
     @PostMapping("/updateUserPwd")
     @RequiresRoles(value = {ProjectConstants.ROLE_ADMIN, ProjectConstants.ROLE_USER})
-    @RequiresAuthentication
     public Result updateUser(@RequestParam String userId, @RequestParam String plainPassword) {
         User user = new User();
         user.setUserId(userId);
@@ -131,7 +130,6 @@ public class UserController {
     @ApiOperation("根据用户名查询用户")
     @PostMapping("/{userName}")
     @RequiresRoles(value = {ProjectConstants.ROLE_ADMIN, ProjectConstants.ROLE_USER})
-    @RequiresAuthentication
     public Result updateUser(@PathVariable String userName) {
         boolean findResult = false;
 
@@ -150,7 +148,6 @@ public class UserController {
     @ApiOperation("管理员删除用户")
     @DeleteMapping("/{userId}")
     @RequiresRoles(value = {ProjectConstants.ROLE_ADMIN})
-    @RequiresAuthentication
     public Result deleteUser(@PathVariable String userId) {
         boolean result = userService.removeById(userId);
         // 删除关联的角色

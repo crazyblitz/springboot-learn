@@ -4,6 +4,7 @@ import com.ley.springboot.aop.code.config.LogAspectConfig;
 import com.ley.springboot.aop.code.service.CodeService;
 import com.ley.springboot.aop.code.service.impl.CodeServiceImpl;
 import org.springframework.aop.support.AopUtils;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -15,6 +16,7 @@ import java.lang.reflect.InvocationTargetException;
  * log application
  **/
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class LogApplication {
 
     public static void main(String[] args) {
