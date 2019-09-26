@@ -30,7 +30,7 @@ public class RestTemplateUtils {
     public static <T> T getForObject(RestTemplate restTemplate, String url, Class<T> responseType, Map<String, String> uriVariables) {
         StringBuffer buffer = new StringBuffer(255);
         if (CollectionUtils.isNotEmpty(uriVariables)) {
-            buffer.append(url + "?");
+            buffer.append(url).append("?");
             for (Map.Entry<String, String> uriVariableEntry : uriVariables.entrySet()) {
                 String paramKey = uriVariableEntry.getKey();
                 if (StringUtils.isNotBlank(paramKey)) {
@@ -40,10 +40,11 @@ public class RestTemplateUtils {
             }
         }
         String realUrl = buffer.toString();
-        realUrl=realUrl.substring(0,realUrl.length()-1);
-        log.info("real url: {}", realUrl);
-        T result = restTemplate.getForObject(realUrl, responseType, uriVariables);
-        return result;
+        realUrl = realUrl.substring(0, realUrl.length() - 1);
+        if (log.isInfoEnabled()) {
+            log.info("real url: {}", realUrl);
+        }
+        return restTemplate.getForObject(realUrl, responseType, uriVariables);
     }
 
 
@@ -64,16 +65,20 @@ public class RestTemplateUtils {
 
         StringBuffer buffer = new StringBuffer(255);
         if (CollectionUtils.isNotEmpty(nearByGetParams)) {
-            buffer.append(url + "?");
+            buffer.append(url).append("?");
             for (Map.Entry<String, String> uriVariableEntry : nearByGetParams.entrySet()) {
                 String paramKey = uriVariableEntry.getKey();
-                String paramValue = uriVariableEntry.getValue();
                 if (StringUtils.isNotBlank(paramKey)) {
                     String param = paramKey + "=" + URL_PARAM_VALUE_PREFIX + paramKey + URL_PARAM_VALUE_SUFFIX + "&";
                     buffer.append(param);
                 }
             }
         }
-        System.out.println(buffer.toString().substring(0,buffer.toString().length()-1));
+        String realUrl = buffer.toString();
+        realUrl = realUrl.substring(0, realUrl.length() - 1);
+        if (log.isInfoEnabled()) {
+            log.info("real url: {}", realUrl);
+        }
+        System.out.println(buffer.toString().substring(0, buffer.toString().length() - 1));
     }
 }

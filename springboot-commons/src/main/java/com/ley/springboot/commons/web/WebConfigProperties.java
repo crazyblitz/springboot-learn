@@ -20,12 +20,12 @@ public class WebConfigProperties {
 
     private static final String WEB_CONFIG_LOCATION = "classpath:config/web.properties";
 
-    private static final PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+    private static final PathMatchingResourcePatternResolver RESOURCE_PATTERN_RESOLVER = new PathMatchingResourcePatternResolver();
 
     private static final Properties WEB_PROPERTIES = new Properties();
 
     static {
-        Resource resource = resourcePatternResolver.getResource("classpath:config/web.properties");
+        Resource resource = RESOURCE_PATTERN_RESOLVER.getResource("classpath:config/web.properties");
         try {
             WEB_PROPERTIES.load(resource.getInputStream());
         } catch (IOException e) {

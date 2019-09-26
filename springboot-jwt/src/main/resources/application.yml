@@ -35,3 +35,5 @@ jwt:
 security:
   postPath: "/api/business/users/login"
   getPath: "/api/business/users/index"
+server:
+  port: 9090

@@ -18,16 +18,17 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Enumeration;
 
 /**
  * 用于登录拦截的切面,如果用户没有登录,不能访问(AOP只能拦截到方法级)
  *
  * @author liuenyuan
  **/
-//@Aspect
-//@Component
-//@Slf4j
-//@Order(1)
+@Aspect
+@Component
+@Slf4j
+@Order(1)
 public class LoginAspect {
 
     @Autowired
@@ -39,7 +40,8 @@ public class LoginAspect {
     /**
      * 扫描所以带有特定注解的类方法
      */
-    @Pointcut(value = "@annotation(com.ley.springboot.aop.annotation.NeedLogin) || execution(* com.ley.springboot.aop.controller.*.*(..))")
+    @Pointcut(value = "(@annotation(com.ley.springboot.aop.annotation.NeedLogin) && execution(* com.ley.springboot.aop.controller.*.*(..)))" +
+            " || @within(com.ley.springboot.aop.annotation.NeedLogin)")
     private void loginPointcut() {
     }
 
@@ -51,7 +53,7 @@ public class LoginAspect {
         Class<?> targetClass = AopUtils.getTargetClass(joinPoint.getTarget());
         if (AnnotationUtils.findAnnotation(targetClass, NeedLogin.class) != null) {
             NeedLogin needLogin = AnnotationUtils.getAnnotation(targetClass, NeedLogin.class);
-            if (needLogin.value()) {
+            if (!needLogin.value()) {
                 return joinPoint.proceed();
             } else {
                 return gson.toJson("您还没登录");
@@ -61,6 +63,11 @@ public class LoginAspect {
             NeedLogin needLogin = method.getAnnotation(NeedLogin.class);
             HttpServletRequest request = getRequest();
             boolean findSession = StringUtils.hasText((String) request.getSession().getAttribute(SESSION_USER_NAME));
+            Enumeration<String> attributeNames = request.getSession().getAttributeNames();
+            while (attributeNames.hasMoreElements()) {
+                System.out.println(attributeNames.nextElement());
+            }
+            System.out.println(request.getSession().getAttribute(SESSION_USER_NAME));
             boolean value = needLogin.value();
             if ((!value) || (findSession && value)) {
                 return joinPoint.proceed();

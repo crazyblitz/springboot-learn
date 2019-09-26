@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.Resource;
 
-@ConditionalOnWebApplication
-@Configuration
+//@ConditionalOnWebApplication
+//@Configuration
 public class NeedLoginAdvisorConfig {
 
     @Resource

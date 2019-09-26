@@ -49,16 +49,17 @@ public class NeedLoginMethodInterceptor implements MethodInterceptor {
             boolean methodProceed;
             if (classNeedLogin != null) {
                 methodProceed = !classNeedLogin.value();
-            } else if (methodNeedLogin != null) {
-                methodProceed = !methodNeedLogin.value();
-            } else {
+            } else if (classNeedLogin != null && methodNeedLogin != null) {
                 methodProceed = (!classNeedLogin.value() && !methodNeedLogin.value());
+            } else {
+                methodProceed = !methodNeedLogin.value();
             }
             boolean canProceed = findSession || methodProceed;
             if (canProceed) {
                 proceed = invocation.proceed();
             }
         }
+
         return proceed;
     }
 }

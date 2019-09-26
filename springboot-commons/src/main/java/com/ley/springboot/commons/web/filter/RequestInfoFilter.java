@@ -1,10 +1,11 @@
 package com.ley.springboot.commons.web.filter;
 
 import com.ley.springboot.commons.web.WebConfigProperties;
-import lombok.extern.apachecommons.CommonsLog;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.*;
@@ -16,7 +17,7 @@ import java.util.*;
 /**
  * RequestInfoFilter用来拦截请求响应时间
  **/
-@CommonsLog
+@Slf4j
 public class RequestInfoFilter implements Filter {
 
 
@@ -25,8 +26,9 @@ public class RequestInfoFilter implements Filter {
      **/
     private static final List<String> ignoreList = new ArrayList<>();
 
-    private static final PathMatchingResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+    private static final PathMatchingResourcePatternResolver RESOURCE_PATTERN_RESOLVER = new PathMatchingResourcePatternResolver();
 
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         ignoreList.addAll(WebConfigProperties.getPropertyAsList("requestFilter.ignoreList"));
     }
@@ -130,13 +132,12 @@ public class RequestInfoFilter implements Filter {
     }
 
     public static void main(String[] args) {
-        Resource resource = resourcePatternResolver.getResource("classpath:config/web.properties");
+        Resource resource = RESOURCE_PATTERN_RESOLVER.getResource("classpath:config/web.properties");
         Properties properties = new Properties();
         try {
             properties.load(resource.getInputStream());
-            String ignoreStr = properties.getProperty("requestFileter.ignoreList");
-            String[] ignoreList = ignoreStr.split(",");
-            System.out.println(CollectionUtils.arrayToList(ignoreList));
+            String ignoreStr = properties.getProperty("requestFilter.ignoreList");
+            System.out.println(com.ley.springboot.commons.utils.StringUtils.stringToList(ignoreStr));
         } catch (IOException e) {
             e.printStackTrace();
         }

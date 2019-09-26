@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/api/qrcode")
 public class QRCodeController {
 
-    @GetMapping("/{content}")
-    public void getQRcode(HttpServletResponse response, @PathVariable String content) {
+    @GetMapping("/content")
+    public void getQRCode(HttpServletResponse response, String content) {
         QRCodeUtils.generateQRCode(response, content);
     }
 }

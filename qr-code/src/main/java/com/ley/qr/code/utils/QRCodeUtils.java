@@ -15,13 +15,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.ley.qr.code.utils.Constants.LOG_MESSAGE_FORMAT;
 
 /**
  * @author liuenyuan
  * 二维码工具类
- * **/
+ **/
 @Slf4j
 public class QRCodeUtils {
 
@@ -34,7 +37,7 @@ public class QRCodeUtils {
     /**
      * 图像高度
      **/
-    private final static int DEFAULT_HIGHT = 200;
+    private final static int DEFAULT_HEIGHT = 200;
 
     /**
      * 编码
@@ -44,7 +47,7 @@ public class QRCodeUtils {
     /**
      * 二维码图片后缀
      **/
-    private final static String QRCODE_FORMAT = "png";
+    private final static String QR_CODE_FORMAT = "png";
 
     /**
      * 生成二维码文件
@@ -57,11 +60,11 @@ public class QRCodeUtils {
     public static String generateQRCode(String filePath, String fileName, String content) {
 
         int width = DEFAULT_WIDTH;
-        int height = DEFAULT_HIGHT;
+        int height = DEFAULT_HEIGHT;
         // 图像类型
-        String format = QRCODE_FORMAT;
+        String format = QR_CODE_FORMAT;
 
-        Map<EncodeHintType, Object> hints = new HashMap<>();
+        Map<EncodeHintType, Object> hints = new HashMap<>(2);
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
 
         try {
@@ -76,14 +79,13 @@ public class QRCodeUtils {
             File qrCodeFile = new File(qrCodeFilePath);
             // 输出图像
             MatrixToImageWriter.writeToStream(bitMatrix, format, new FileOutputStream(qrCodeFile));
-            log.info("二维码生成成功,地址: {}", qrCodeFilePath);
+            if (log.isInfoEnabled()) {
+                log.info("二维码生成成功,地址: {}", qrCodeFilePath);
+            }
             return qrCodeFilePath;
-        } catch (WriterException e) {
-            e.printStackTrace();
-            System.out.println("二维码输出异常");
-        } catch (IOException e) {
-            log.error("e message: {}", e.getMessage());
-            log.warn("二维码图片生成失败");
+        } catch (WriterException | IOException e) {
+            log.error(LOG_MESSAGE_FORMAT, Arrays.asList(filePath, fileName, content),
+                    e.getMessage(), e);
         }
         return null;
     }
@@ -92,7 +94,7 @@ public class QRCodeUtils {
      * 解析二维码内容
      *
      * @param filePath 二维码绝对路径
-     * @return return qrcode json content
+     * @return return qr code json content
      */
     public static String parseQRCode(String filePath) {
         BufferedImage image;
@@ -108,10 +110,8 @@ public class QRCodeUtils {
             // 对图像进行解码
             Result result = new MultiFormatReader().decode(binaryBitmap, hints);
             return result.getText();
-        } catch (IOException e) {
-            log.error("e: {}", e.getMessage());
-        } catch (NotFoundException e) {
-            log.error("{} file not found: {}", filePath);
+        } catch (IOException | NotFoundException e) {
+            log.error(LOG_MESSAGE_FORMAT, Arrays.asList(filePath), e.getMessage(), e);
         }
         return null;
     }
@@ -129,11 +129,11 @@ public class QRCodeUtils {
         // 图像宽度
         int width = DEFAULT_WIDTH;
         // 图像高度
-        int height = DEFAULT_HIGHT;
+        int height = DEFAULT_HEIGHT;
         // 图像类型
-        String format = QRCODE_FORMAT;
+        String format = QR_CODE_FORMAT;
 
-        Map<EncodeHintType, Object> hints = new HashMap<>();
+        Map<EncodeHintType, Object> hints = new HashMap<>(2);
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
 
         try {
@@ -142,13 +142,8 @@ public class QRCodeUtils {
             // 输出图像
             MatrixToImageWriter.writeToStream(bitMatrix, format, response.getOutputStream());
             response.setContentType(MediaType.IMAGE_PNG_VALUE);
-            log.info("二维码输出成功");
-        } catch (WriterException e) {
-            log.error("e message: {}", e.getMessage());
-            log.warn("二维码输出异常");
-        } catch (IOException e) {
-            log.error("e message: {}", e.getMessage());
-            log.warn("二维码输出异常");
+        } catch (WriterException | IOException e) {
+            log.error(LOG_MESSAGE_FORMAT, Arrays.asList(content), e.getMessage(), e);
         }
     }
 }

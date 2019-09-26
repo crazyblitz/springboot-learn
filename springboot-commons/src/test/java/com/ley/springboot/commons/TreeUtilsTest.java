@@ -6,6 +6,7 @@ import com.ley.springboot.commons.web.json.GsonUtils;
 import lombok.Data;
 import lombok.ToString;
 import org.junit.Test;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,7 @@ public class TreeUtilsTest {
 
         @Override
         protected boolean isRootNode(TreeNode treeNode) {
-            if (treeNode.getPid() == null) {
+            if (StringUtils.hasText(treeNode.getPid())) {
                 return true;
             } else {
                 return false;

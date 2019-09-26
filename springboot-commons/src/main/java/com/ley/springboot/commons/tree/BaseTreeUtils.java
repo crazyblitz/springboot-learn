@@ -42,7 +42,7 @@ public abstract class BaseTreeUtils<T extends BaseTreeNode> {
      * 获取子节点
      **/
     private List<T> getChildren(T rootNode, List<T> nodes) {
-        List<T> children = new ArrayList<>(64);
+        List<T> children = new ArrayList<>(256);
 
         for (T node : nodes) {
             // 遍历所有节点,将所有父id与传过来的根节点的id比较
@@ -52,13 +52,13 @@ public abstract class BaseTreeUtils<T extends BaseTreeNode> {
             }
         }
 
-        //递归遍历
+        // 递归设置子节点集合
         for (T child : children) {
             child.setChildren(getChildren(child, nodes));
         }
 
 
-        //结束递归
+        // 结束递归
         if (CollectionUtils.isEmpty(children)) {
             return Collections.emptyList();
         }
@@ -69,6 +69,8 @@ public abstract class BaseTreeUtils<T extends BaseTreeNode> {
 
     /**
      * 判断一个节点是否是根节点
+     *
+     * @return return {@code true} when node is root node.
      **/
     protected abstract boolean isRootNode(T treeNode);
 

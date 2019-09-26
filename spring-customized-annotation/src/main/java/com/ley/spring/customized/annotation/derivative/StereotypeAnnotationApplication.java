@@ -34,6 +34,4 @@ public class StereotypeAnnotationApplication {
         application.setWebApplicationType(WebApplicationType.NONE);
         application.run(args).close();
     }
-
-
 }

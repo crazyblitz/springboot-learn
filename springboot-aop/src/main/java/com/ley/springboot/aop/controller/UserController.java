@@ -24,7 +24,7 @@ public class UserController {
 
     @GetMapping("")
     @NeedLogin
-    public String getUserByUserName(HttpServletRequest request) {
+    public String getUserByUserName() {
         return gson.toJson(userService.listUsers());
     }
 }

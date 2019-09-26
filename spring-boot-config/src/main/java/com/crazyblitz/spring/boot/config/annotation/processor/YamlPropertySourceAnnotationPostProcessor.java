@@ -21,6 +21,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.EncodedResource;
 import org.springframework.core.io.support.PropertySourceFactory;
 import org.springframework.core.io.support.ResourcePropertySource;
+import org.springframework.lang.NonNull;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -51,13 +52,13 @@ public class YamlPropertySourceAnnotationPostProcessor extends InstantiationAwar
     private static final PropertySourceFactory DEFAULT_PROPERTY_SOURCE_FACTORY = new YamlPropertySourceFactory();
 
     @Override
-    public void setEnvironment(Environment environment) {
+    public void setEnvironment(@NonNull Environment environment) {
         Assert.isInstanceOf(ConfigurableEnvironment.class, environment, "environment must be instance of ConfigurableEnvironment.");
         this.environment = environment;
     }
 
     @Override
-    public void setResourceLoader(ResourceLoader resourceLoader) {
+    public void setResourceLoader(@NonNull ResourceLoader resourceLoader) {
         Assert.notNull(resourceLoader, "resourceLoader must not be null.");
         this.resourceLoader = resourceLoader;
     }
@@ -116,9 +117,7 @@ public class YamlPropertySourceAnnotationPostProcessor extends InstantiationAwar
             } catch (Throwable ex) {
                 // Placeholders not resolvable or resource not found when trying to open it
                 if (ignoreResourceNotFound) {
-                    if (log.isInfoEnabled()) {
-                        log.info("Properties or Yml or Yaml location [" + location + "] not resolvable: " + ex.getMessage());
-                    }
+                    log.warn("Properties or Yml or Yaml location [" + location + "] not resolvable: " + ex.getMessage());
                 } else {
                     throw new BeanDefinitionStoreException("Failed to create bean [" + bean.getClass() + "]", ex);
                 }

@@ -4,6 +4,7 @@ import com.ley.springboot.commons.utils.StringUtils;
 import com.ley.springboot.commons.web.WebConfigProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,14 +51,14 @@ public class FileUploadUtils {
         if (file == null) {
             return null;
         }
-        String uploadFileName = "";
+        String uploadFileName;
         String uploadRootPath = this.uploadRootPath;
         if (file.isEmpty()) {
             result = "文件未上传";
         } else {
-            String _fileName = file.getOriginalFilename();
+            String fileName = file.getOriginalFilename();
             //文件扩展名
-            String suffix = _fileName.substring(_fileName.lastIndexOf(".") + 1);
+            String suffix = FilenameUtils.getExtension(fileName);
             if (StringUtils.isNotBlank(suffix)) {
                 if (isAllowUploadFile(suffix)) {
 
@@ -65,7 +66,9 @@ public class FileUploadUtils {
                     uploadFileName = UUID.randomUUID().toString() + "." + suffix;
 
                     String uploadPath = uploadRootPath + path;
-                    log.info("开始上传文件,上传的文件名:{},上传的路径:{},新文件名:{}", _fileName, uploadPath, uploadFileName);
+                    if (log.isInfoEnabled()) {
+                        log.info("开始上传文件,上传的文件名:{},上传的路径:{},新文件名:{}", fileName, uploadPath, uploadFileName);
+                    }
 
                     //判断上传路径是否存在
                     File uploadDir = new File(uploadPath);
@@ -73,7 +76,7 @@ public class FileUploadUtils {
                         //使文件可以改,因为Tomcat发布服务后,文件的权限不一定是可以改的
                         uploadDir.setWritable(true);
                         //使用dirs是为了解决上传的路径中,如果有文件夹的没有创建,其会自动创建文件夹
-                        uploadDir.mkdir();
+                        uploadDir.mkdirs();
                     }
 
 
@@ -111,8 +114,7 @@ public class FileUploadUtils {
      * get file restore absolute path
      **/
     public String getFilePath(String path) {
-        String fileAbsolutePath = this.uploadRootPath + path;
-        return fileAbsolutePath;
+        return this.uploadRootPath + path;
     }
 
 
@@ -121,11 +123,7 @@ public class FileUploadUtils {
      **/
     private boolean isAllowUploadFile(String fileSuffix) {
         String fileSuffixLower = fileSuffix.toLowerCase();
-        if (allowFiles.contains(fileSuffixLower)) {
-            return true;
-        } else {
-            return false;
-        }
+        return allowFiles.contains(fileSuffixLower);
     }
 
 

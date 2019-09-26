@@ -13,7 +13,7 @@ public class OptionalTest {
     @Test
     public void testOptional() {
         User user = new User();
-        user.setName("刘恩源");
+        user.setName("");
         user.setAddress("中国");
         User userTmp=Optional.of(user).filter(u -> StringUtils.hasText(u.getName()))
                 .filter(u -> StringUtils.hasText(u.getAddress())).orElseThrow(() ->

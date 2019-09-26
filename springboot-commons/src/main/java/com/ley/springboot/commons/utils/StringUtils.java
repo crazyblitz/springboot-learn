@@ -10,7 +10,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         if (CollectionUtils.isEmpty(stringList)) {
             return null;
         } else {
-            StringBuilder builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder(255);
 
             for (int i = 0; i < stringList.size(); ++i) {
                 builder.append((String) stringList.get(i));
@@ -31,7 +31,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         if (isEmpty(string)) {
             return null;
         } else {
-            List<Integer> integerList = new ArrayList();
+            List<Integer> integerList = new ArrayList<>(16);
             String[] stringArray = string.split(",");
 
             for (int i = 0; i < stringArray.length; ++i) {
