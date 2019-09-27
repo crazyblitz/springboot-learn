@@ -2,6 +2,7 @@ package com.crazyblitz.springboot.shiro.config;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.crazyblitz.springboot.shiro.sys.entity.Permission;
 import com.crazyblitz.springboot.shiro.sys.entity.Role;
 import com.crazyblitz.springboot.shiro.sys.entity.User;
 import com.crazyblitz.springboot.shiro.sys.service.UserService;
@@ -14,10 +15,12 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author liuenyuan
@@ -50,19 +53,25 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
         if (log.isInfoEnabled()) {
             log.info("doGetAuthorizationInfo() user: {}", user);
         }
-        List<Role> roles = userService.getRoles(user.getUserId());
+        List<Role> roles = userService.getRoles(user.getId());
+
 
         for (Role role : roles) {
 
-            authorizationInfo.addRole(role.getRoleName());
+            authorizationInfo.addRole(role.getName());
+
 
             // 如果有权限，应该增加所有角色对应的权限
-            // authorizationInfo.addStringPermission()
+            List<Permission> permissions = userService.getPermissions(role.getId());
+            if (!CollectionUtils.isEmpty(permissions)) {
+                authorizationInfo.addStringPermissions(userService.getPermissions(role.getId())
+                        .stream().map(Permission::getName).collect(Collectors.toList()));
+            }
         }
 
         if (log.isInfoEnabled()) {
-            log.info("用户: {},具有的角色: {}", user.getUserName(), authorizationInfo.getRoles());
-            log.info("用户: {},具有的权限: {}", user.getUserName(), authorizationInfo.getStringPermissions());
+            log.info("用户: {},具有的角色: {}", user.getName(), authorizationInfo.getRoles());
+            log.info("用户: {},具有的权限: {}", user.getName(), authorizationInfo.getStringPermissions());
         }
 
         return authorizationInfo;
@@ -85,7 +94,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
         //从转换后的token中获取用户名
         String username = upToken.getUsername();
         //查询数据库，得到用户
-        User user = userService.getOne(new QueryWrapper<User>().lambda().eq(User::getUserName, username));
+        User user = userService.getOne(new QueryWrapper<User>().lambda().eq(User::getName, username));
         if (user == null) {
             if (log.isInfoEnabled()) {
                 log.info("没有用户: {}", username);
@@ -94,7 +103,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
         }
 
         //得到加密密码的盐值
-        ByteSource salt = ByteSource.Util.bytes(user.getUserSalt());
+        ByteSource salt = ByteSource.Util.bytes(user.getSalt());
 
         //得到盐值加密后的密码: 只用于方便数据库测试,后期不会用到。
         Object md = new SimpleHash(PasswordUtils.ALGORITHM_NAME, upToken.getPassword(), salt, PasswordUtils.HASH_ITERATIONS);
@@ -105,7 +114,7 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
         }
 
         //TODO: 用户名;用户密码;加密盐;realm name
-        info = new SimpleAuthenticationInfo(user, user.getUserPassword(), salt, getName());
+        info = new SimpleAuthenticationInfo(user, user.getPassword(), salt, getName());
         return info;
     }
 

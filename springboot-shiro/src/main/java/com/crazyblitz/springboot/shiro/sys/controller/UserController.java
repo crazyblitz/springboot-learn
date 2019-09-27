@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.crazyblitz.springboot.shiro.sys.entity.Permission;
 import com.crazyblitz.springboot.shiro.sys.entity.Role;
 import com.crazyblitz.springboot.shiro.sys.entity.User;
 import com.crazyblitz.springboot.shiro.sys.entity.UserRole;
@@ -16,6 +17,7 @@ import com.crazyblitz.springboot.shiro.utils.security.PasswordUtils;
 import com.crazyblitz.springboot.shiro.utils.web.result.Result;
 import com.crazyblitz.springboot.shiro.utils.web.result.ResultCode;
 import com.crazyblitz.springboot.shiro.utils.web.result.ResultEntity;
+import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -48,7 +51,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/sys/user")
 @Slf4j
 @Api("User Controller")
-@RequiresAuthentication
 public class UserController {
 
     @Autowired
@@ -75,14 +77,14 @@ public class UserController {
             PrincipalCollection principals = currentUser.getPrincipals();
             User realUser = (User) principals.getPrimaryPrincipal();
 
-            Cookie userIdCookie = new Cookie(CookieConstants.USER_COOKIE_ID, realUser.getUserId());
+            Cookie userIdCookie = new Cookie(CookieConstants.USER_COOKIE_ID, realUser.getId());
             userIdCookie.setPath("/");
             response.addCookie(userIdCookie);
             log.info("current login user: {}", realUser);
 
 
-            userMap.put("roles", userService.getRoles(realUser.getUserId()));
-            userMap.put("userName", realUser.getUserName());
+            userMap.put("roles", userService.getRoles(realUser.getId()));
+            userMap.put("userName", realUser.getName());
             result = Result.builder().code(ResultCode.SUCCESS.code()).message("登录成功")
                     .data(userMap).build();
         } catch (UnknownAccountException ua) {
@@ -101,10 +103,11 @@ public class UserController {
     @ApiOperation("/管理员查询用户列表(模糊查询)")
     @GetMapping("/list")
     @RequiresRoles(value = {ProjectConstants.ROLE_ADMIN})
+    @RequiresPermissions(value = {"查询用户"},logical = Logical.AND)
     public Result listUsers(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam(required = false) String userName) {
         IPage<User> page = new Page<>(pageNum, pageSize);
         if (StringUtils.hasText(userName)) {
-            page = userService.page(page, new QueryWrapper<User>().lambda().like(User::getUserName, userName).orderByDesc(User::getCreateTime));
+            page = userService.page(page, new QueryWrapper<User>().lambda().like(User::getName, userName).orderByDesc(User::getCreateTime));
         } else {
             page = userService.page(page, new QueryWrapper<User>().lambda().orderByDesc(User::getCreateTime));
 
@@ -118,11 +121,11 @@ public class UserController {
     @RequiresRoles(value = {ProjectConstants.ROLE_ADMIN, ProjectConstants.ROLE_USER})
     public Result updateUser(@RequestParam String userId, @RequestParam String plainPassword) {
         User user = new User();
-        user.setUserId(userId);
+        user.setId(userId);
         String newSalt = UUID.randomUUID().toString();
         String newPassword = PasswordUtils.renewPassword(plainPassword, newSalt);
-        user.setUserPassword(newPassword);
-        user.setUserSalt(newSalt);
+        user.setPassword(newPassword);
+        user.setSalt(newSalt);
         return ResultEntity.success("更新成功", userService.updateById(user));
     }
 
@@ -133,7 +136,7 @@ public class UserController {
     public Result updateUser(@PathVariable String userName) {
         boolean findResult = false;
 
-        User findUser = userService.getOne(new QueryWrapper<User>().lambda().eq(User::getUserName, userName));
+        User findUser = userService.getOne(new QueryWrapper<User>().lambda().eq(User::getName, userName));
 
         findResult = findUser != null;
 
@@ -153,8 +156,8 @@ public class UserController {
         // 删除关联的角色
         List<UserRole> userRoles = userRoleService.list(new LambdaQueryWrapper<UserRole>()
                 .eq(UserRole::getUserId, userId));
-        System.out.println(userRoles.stream().map(UserRole::getUserRoleId).collect(Collectors.toList()));
-        userRoleService.removeByIds(userRoles.stream().map(UserRole::getUserRoleId).collect(Collectors.toList()));
+        System.out.println(userRoles.stream().map(UserRole::getId).collect(Collectors.toList()));
+        userRoleService.removeByIds(userRoles.stream().map(UserRole::getId).collect(Collectors.toList()));
         log.info("result: {}", result);
         if (result) {
             return ResultEntity.success("删除用户成功");
@@ -168,18 +171,18 @@ public class UserController {
     public Result userRegister(@RequestParam String userName, @RequestParam String plainPassword) {
         String salt = UUID.randomUUID().toString();
         String userId = UUID.randomUUID().toString();
-        User user = User.builder().userId(userId)
-                .userName(userName).userSalt(salt).userPassword(PasswordUtils.renewPassword(plainPassword, salt))
+        User user = User.builder().id(userId)
+                .name(userName).salt(salt).password(PasswordUtils.renewPassword(plainPassword, salt))
                 .createTime(new Date(System.currentTimeMillis())).build();
         userService.save(user);
 
-        Role roleUser = roleService.getOne(new QueryWrapper<Role>().lambda().eq(Role::getRoleName, ProjectConstants.ROLE_USER));
-        String roleUserId = roleUser.getRoleId();
+        Role roleUser = roleService.getOne(new QueryWrapper<Role>().lambda().eq(Role::getName, ProjectConstants.ROLE_USER));
+        String roleUserId = roleUser.getId();
 
         UserRole userRole = new UserRole();
         userRole.setRoleId(roleUserId);
         userRole.setUserId(userId);
-        userRole.setUserRoleId(UUID.randomUUID().toString());
+        userRole.setId(UUID.randomUUID().toString());
         userRoleService.save(userRole);
 
         if (log.isInfoEnabled()) {

@@ -21,4 +21,5 @@ public class ProjectConstants {
      * 用户
      **/
     public static final String ROLE_USER = "user";
+
 }

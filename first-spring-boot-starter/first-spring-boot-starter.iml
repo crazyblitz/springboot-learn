@@ -60,5 +60,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-test:5.0.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.xmlunit:xmlunit-core:2.5.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context-indexer:5.0.6.RELEASE" level="project" />
   </component>
 </module>

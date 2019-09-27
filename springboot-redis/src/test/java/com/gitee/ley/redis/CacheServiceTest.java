@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {RedisApplication.class})
 @Slf4j
@@ -22,6 +25,13 @@ public class CacheServiceTest {
     @Test
     public void testCacheService() {
         String cacheKey = "1001";
-        System.out.println(cacheService.getCache(cacheKey, cacheValue -> "1002"));
+        System.out.println(cacheService.getCache(cacheKey, cacheValue -> {
+            try {
+                return InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+            return "";
+        }));
     }
 }

@@ -1,6 +1,6 @@
 package com.crazyblitz.springboot.shiro.sys.service;
 
-import com.crazyblitz.springboot.shiro.sys.entity.Role;
+import com.crazyblitz.springboot.shiro.sys.entity.Permission;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author liuenyuan
  * @since 2019-09-27
  */
-public interface RoleService extends IService<Role> {
+public interface PermissionService extends IService<Permission> {
 
 }

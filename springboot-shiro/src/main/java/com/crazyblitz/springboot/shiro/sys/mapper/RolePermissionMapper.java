@@ -1,6 +1,6 @@
 package com.crazyblitz.springboot.shiro.sys.mapper;
 
-import com.crazyblitz.springboot.shiro.sys.entity.User;
+import com.crazyblitz.springboot.shiro.sys.entity.RolePermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author liuenyuan
  * @since 2019-09-27
  */
-public interface UserMapper extends BaseMapper<User> {
+public interface RolePermissionMapper extends BaseMapper<RolePermission> {
 
 }

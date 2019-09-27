@@ -23,9 +23,4 @@ public @interface ConditionalOnClass {
      * @return the class names that must be present.
      */
     String[] name() default {};
-
-    /**
-     * search classes base packages
-     **/
-    String[] basePackages() default {};
 }

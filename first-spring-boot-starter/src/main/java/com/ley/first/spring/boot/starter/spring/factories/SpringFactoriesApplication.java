@@ -3,6 +3,7 @@ package com.ley.first.spring.boot.starter.spring.factories;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Indexed;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ReflectionUtils;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  */
 @EnableConfiguration
 @ComponentScan(basePackages = "com.ley.first.spring.boot.starter.spring.factories")
+@Indexed
 public class SpringFactoriesApplication {
 
     public static void main(String[] args) throws ClassNotFoundException, InvocationTargetException, IllegalAccessException {

@@ -4,16 +4,16 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.crazyblitz.springboot.shiro.sys.entity.User">
-        <id column="user_id" property="userId" />
-        <result column="user_name" property="userName" />
-        <result column="user_salt" property="userSalt" />
-        <result column="user_password" property="userPassword" />
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="salt" property="salt" />
+        <result column="password" property="password" />
         <result column="create_time" property="createTime" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        user_id, user_name, user_salt, user_password, create_time
+        id, name, salt, password, create_time
     </sql>
 
 </mapper>

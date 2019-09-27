@@ -1,6 +1,5 @@
 package com.ley.first.spring.boot.starter.condition;
 
-import com.ley.first.spring.boot.starter.bean.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
@@ -25,12 +24,17 @@ public class ConditionalApplication {
         return new Person(20, "刘恩源");
     }
 
+    @ConditionalOnClass2(name = {"com.ley.first.spring.boot.starter.condition.Person"})
+    @Bean
+    public Person person2() {
+        return new Person(20, "刘恩源");
+    }
 
     public static void main(String[] args) {
         ConfigurableApplicationContext ctx = SpringApplication.run(ConditionalApplication.class, args);
         System.out.println(AutoConfigurationPackages.get(ctx.getBeanFactory()));
-        System.out.println(ctx.containsBean("person"));
         System.out.println(ctx.getBean("person"));
+        System.out.println(ctx.getBean("person2"));
         ctx.close();
     }
 }

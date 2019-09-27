@@ -33,58 +33,6 @@ import static org.springframework.util.ClassUtils.forName;
 @Slf4j
 public class OnClassCondition implements Condition {
 
-    private static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
-
-
-    private boolean match = true;
-
-
-    private final MetadataReaderFactory metadataReaderFactory = new CachingMetadataReaderFactory();
-
-    /**
-     * use fast-fail
-     **/
-    public boolean matches0(ConditionContext context, AnnotatedTypeMetadata metadata) {
-        Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(ConditionalOnClass.class.getName());
-        String[] classNames = (String[]) annotationAttributes.get("name");
-        String[] basePackages = (String[]) annotationAttributes.get("basePackages");
-        List<String> classNameList = CollectionUtils.arrayToList(classNames);
-        boolean[] matches = new boolean[classNames.length];
-        //初始化为false
-        initMatches(matches);
-        if (!CollectionUtils.isEmpty(classNameList)) {
-            classNameList.stream().forEach(className -> {
-                ResourcePatternResolver resolver = ResourcePatternUtils.getResourcePatternResolver(context.getResourceLoader());
-                try {
-                    for (String basePackage : basePackages) {
-                        String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + resolveBasePackage(basePackage, context) + "/" + DEFAULT_RESOURCE_PATTERN;
-                        Resource[] resources = resolver.getResources(packageSearchPath);
-                        int matchIndex = 0;
-                        for (Resource resource : resources) {
-                            if (resource.isReadable()) {
-                                MetadataReader metadataReader = metadataReaderFactory.getMetadataReader(resource);
-                                ClassMetadata classMetadata = metadataReader.getClassMetadata();
-                            if (classMetadata.getClassName().equalsIgnoreCase(className)) {
-                                matches[matchIndex++] = true;
-                            }
-                        }
-                        }
-                    }
-                } catch (IOException e) {
-                    log.error("I/O failure during classpath scanning: {}", e.getMessage());
-                }
-            });
-        }
-        int matchLength = matches.length;
-        for (int i = 0; i < matchLength; i++) {
-            if (!matches[i]) {
-                this.match = false;
-                break;
-            }
-        }
-        return match;
-    }
-
     private static boolean isPresent(String className, ClassLoader classLoader) {
         if (classLoader == null) {
             classLoader = ClassUtils.getDefaultClassLoader();
@@ -97,16 +45,6 @@ public class OnClassCondition implements Condition {
         }
     }
 
-    private String resolveBasePackage(String basePackage, ConditionContext context) {
-        return ClassUtils.convertClassNameToResourcePath(context.getEnvironment().resolveRequiredPlaceholders(basePackage));
-    }
-
-    private void initMatches(boolean[] matches) {
-        for (int i = 0; i < matches.length; i++) {
-            matches[i] = false;
-        }
-    }
-
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
@@ -115,7 +53,7 @@ public class OnClassCondition implements Condition {
         List<String> classNameList = CollectionUtils.arrayToList(classNames);
         if (classNameList.isEmpty()) {
             for (String className : classNames) {
-                if (!isPresent(className, null)) {
+                if (!isPresent(className, ClassUtils.getDefaultClassLoader())) {
                     return false;
                 } else {
                     continue;

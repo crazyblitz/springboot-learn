@@ -14,7 +14,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author liuenyuan
- * @since 2019-09-14
+ * @since 2019-09-27
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -24,14 +24,14 @@ public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId("role_id")
-    private String roleId;
+    @TableId("id")
+    private String id;
 
-    @TableField("role_name")
-    private String roleName;
+    @TableField("name")
+    private String name;
 
-    @TableField("role_desc")
-    private String roleDesc;
+    @TableField("description")
+    private String description;
 
 
 }
