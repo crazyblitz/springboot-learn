@@ -13,7 +13,7 @@
     <description>springboot整合images处理工具包</description>
     <properties>
         <batik.version>1.6</batik.version>
-        <xerces.version>2.5.0</xerces.version>
+        <xerces.version>2.12.2</xerces.version>
         <xml-apis.version></xml-apis.version>
     </properties>
 
